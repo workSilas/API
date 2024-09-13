@@ -3,7 +3,7 @@ import con from './connection.js'
 export async function inserirTurma(turma) {
     const comando = `
     insert tb_turma (nm_turma, ds_curso, nr_ano_letivo, qtd_capacidade, bt_ativo, dt_inclusao) 
-            values  (?, ?, ?, ?, ?, ?)
+    values          (?, ?, ?, ?, ?, ?)
     `
 
     let resposta = await con.query(comando, [turma.nome, turma.curso, turma.anoLetivo, turma.capacidade, turma.ativo, turma.inclusao])
@@ -20,7 +20,7 @@ export async function consultarTurma() {
                 qtd_capacidade		capacidade,
                 bt_ativo			ativo,
                 dt_inclusao			inclusao
-         from tb_turma;
+          from  tb_turma;
     `
 
     let resposta = await con.query(comando)
@@ -32,13 +32,13 @@ export async function consultarTurma() {
 export async function alterarTurma(id, turma) {
     const comando = `
     update tb_turma 
-       set  nm_turma = ?,
-            ds_curso = ?,
-            nr_ano_letivo = ?,
-            qtd_capacidade = ?,
-            bt_ativo = ?,
-            dt_inclusao = ?			
-     where  id_turma = ?;
+       set  nm_turma        = ?,
+            ds_curso        = ?,
+            nr_ano_letivo   = ?,
+            qtd_capacidade  = ?,
+            bt_ativo        = ?,
+            dt_inclusao     = ?			
+     where  id_turma        = ?;
     `
 
     let resposta = await con.query(comando, [turma.nome, turma.curso, turma.anoLetivo, turma.capacidade, turma.ativo, turma.inclusao, id])
@@ -58,4 +58,41 @@ export async function removerTurma(id) {
     let info = resposta[0]
 
     return info.affectedRows
+}
+
+export async function consultarTurmaAno(anoLetivo) {
+    const comando = `
+        select  nm_turma			turma,
+                ds_curso			curso,
+                nr_ano_letivo		anoLetivo,
+                qtd_capacidade		capacidade,
+                bt_ativo			ativo,
+                dt_inclusao			inclusao
+          from  tb_turma
+         where  nr_ano_letivo       = ? ;
+    `
+
+    let resposta = await con.query(comando, [anoLetivo])
+    let registros = resposta[0]
+
+    return registros
+}
+
+export async function consultarTurmaAnoCusro(anoLetivo, curso) {
+    const comando = `
+        select  nm_turma			turma,
+                ds_curso			curso,
+                nr_ano_letivo		anoLetivo,
+                qtd_capacidade		capacidade,
+                bt_ativo			ativo,
+                dt_inclusao			inclusao
+          from   tb_turma
+         where   nr_ano_letivo       = ?
+           and   ds_curso            = ?; 
+    `
+
+    let resposta = await con.query(comando, [anoLetivo, curso])
+    let registros = resposta[0]
+
+    return registros
 }

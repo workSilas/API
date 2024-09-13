@@ -68,6 +68,36 @@ endpoints.delete('/turma/:id', async (req, resp) => {
             erro: err.message
         })
     }
-}) 
+})
+
+endpoints.get('/turma/consultaAno/', async (req, resp) => {
+    try {
+        let ano = req.query.ano
+
+        let registros = await db.consultarTurmaAno(ano)
+        resp.send(registros)
+    }
+    catch (err) {
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
+
+endpoints.get('/turma/consultaAnoCusro/', async (req, resp) => {
+    try {
+        let ano =  req.query.ano
+        let curso =  req.query.curso
+        
+
+        let registros = await db.consultarTurmaAnoCusro(ano, curso)
+        resp.send(registros)
+    }
+    catch (err) {
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
 
 export default endpoints;
