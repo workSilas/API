@@ -1,6 +1,13 @@
-import { Express } from "express";
-const api = Express() 
+import 'dotenv/config'
+import express from 'express'
+import cors from 'cors'
 
-api.listen(3030, () => console.log('Api subiu na porta 3030') )
+import adicionarRotas from './rotas.js'
 
-api.get('/')
+const servidor = express();
+servidor.use(cors());
+servidor.use(express.json());
+
+adicionarRotas(servidor);
+
+servidor.listen(process.env.PORTA, () => console.log(`==> API subiu na porta${process.env.PORTA}` ))
