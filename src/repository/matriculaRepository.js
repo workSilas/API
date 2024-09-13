@@ -1,6 +1,6 @@
 import con from './connection.js'
 
-export async function inserirmatricula(matricula) {
+export async function inserirMatricula(matricula) {
     const comando = `
     insert tb_matricula_aluno (nm_aluno, ds_sexo, dt_nascimento, ds_email, bt_ativo, turma_id) 
     values                    (?, ?, ?, ?, ?, ?);
@@ -12,9 +12,10 @@ export async function inserirmatricula(matricula) {
     return info.insertId
 }
 
-export async function consultarmatricula() {
+export async function consultarMatricula() {
     const comando = `
-        select  nm_aluno		nome,
+        select  id_matricula    id,
+                nm_aluno		nome,
                 ds_sexo			sexo,
                 dt_nascimento	nascimento,
                 ds_email 		email,
@@ -29,7 +30,7 @@ export async function consultarmatricula() {
     return registros
 }
 
-export async function alterarmatricula(id, matricula) {
+export async function alterarMatricula(id, matricula) {
     const comando = `
     update  tb_matricula_aluno 
        set  nm_aluno            = ?,
@@ -47,7 +48,7 @@ export async function alterarmatricula(id, matricula) {
     return info.affectedRows
 }
 
-export async function removermatricula(id) {
+export async function removerMatricula(id) {
     const comando = `
     delete 
       from tb_matricula_aluno	

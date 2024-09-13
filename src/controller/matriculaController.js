@@ -5,7 +5,7 @@ const endpoints = Router()
 
 endpoints.get('/matricula/', async (req, resp) => {
     try {
-        let registros = await db.consultarmatricula()
+        let registros = await db.consultarMatricula()
         resp.send(registros)
     }
     catch (err) {
@@ -18,7 +18,7 @@ endpoints.get('/matricula/', async (req, resp) => {
 endpoints.post('/matricula/', async (req, resp) => {
     try {
         let matricula = req.body
-        let id = await db.inserirmatricula(matricula)
+        let id = await db.inserirMatricula(matricula)
 
         resp.send({
             novoID: id
@@ -36,7 +36,7 @@ endpoints.put('/matricula/:id', async (req, resp) => {
         let id = req.params.id
         let matricula = req.body
 
-        let linhasAfetadas = await db.alterarmatricula(id, matricula)
+        let linhasAfetadas = await db.alterarMatricula(id, matricula)
         if (linhasAfetadas >= 1) {
             resp.send()
         }
@@ -55,7 +55,7 @@ endpoints.delete('/matricula/:id', async (req, resp) => {
     try {
         let id = req.params.id
 
-        let linhasAfetadas = await db.removermatricula(id)
+        let linhasAfetadas = await db.removerMatricula(id)
         if (linhasAfetadas >= 1) {
             resp.send()
         }
